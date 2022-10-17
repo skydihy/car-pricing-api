@@ -7,6 +7,22 @@ content-type: application/json
     "password": "a12dmi34n
 }
 
+### whoAmI - get currently signed in user
+GET http://localhost:3000/auth/whoami
+
+
+### signin
+POST http://localhost:3000/auth/signin
+content-type: application/json
+
+{
+    "email": "foo2077@bar.com",
+    "password": "111111"
+}
+
+### signout
+POST http://localhost:3000/auth/signout
+
 ### findUser
 GET http://localhost:3000/auth/1
 
@@ -23,4 +39,5 @@ content-type: application/json
 {
     "email": "foo2124@bar.com"
 }
+
 
