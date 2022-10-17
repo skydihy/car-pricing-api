@@ -10,6 +10,7 @@ import {
   Post,
   Query,
   Session,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { UsersService } from './users.service';
@@ -17,9 +18,13 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { Serailize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUserIntercepter } from './interceptors/current-user.interceptor';
+import { User } from './users.entity';
 
 @Controller('auth')
 @Serailize(UserDto)
+@UseInterceptors(CurrentUserIntercepter)
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -46,8 +51,8 @@ export class UsersController {
   }
 
   @Get('/whoami')
-  whoAmI(@Session() session: any) {
-    return this.usersService.findOne(session.userId);
+  whoAmI(@CurrentUser() user: User) {
+    return user;
   }
 
   @Get('/:id')
