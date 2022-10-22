@@ -31,4 +31,26 @@ describe('Authentication System', () => {
         expect(email).toEqual(signupEmail);
       });
   });
+
+  it('signup as a new user then get the currently logged in user', async () => {
+    const email = 'hello@world.com';
+
+    const singupRes = await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send({
+        email: email,
+        password: 'foobar',
+      })
+      .expect(201);
+
+    const cookieRes = singupRes.get('Set-Cookie');
+
+    const { body } = await request(app.getHttpServer())
+      .get('/auth/whoami')
+      .send({ email: email, password: 'foobar' })
+      .set('Cookie', cookieRes)
+      .expect(200);
+
+    expect(body.email).toEqual(email);
+  });
 });
