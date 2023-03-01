@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { ReportsController } from './reports.controller';
 import { ReportsService } from './reports.service';
 
-import { Report } from './reports.entity';
+import { Report } from './entities/reports.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Report])],

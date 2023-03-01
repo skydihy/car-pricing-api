@@ -1,7 +1,7 @@
 import { UsersService } from './users.service';
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { User } from './users.entity';
+import { User } from './entities/users.entity';
 import { BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {

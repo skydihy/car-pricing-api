@@ -20,9 +20,9 @@ import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { CurrentUserIntercepter } from './interceptors/current-user.interceptor';
-import { User } from './users.entity';
-import { AuthGuard } from '../guards/auth.guard';
-import { Serailize } from '../interceptors/serialize.interceptor';
+import { User } from './entities/users.entity';
+import { AuthGuard } from '../../guards/auth.guard';
+import { Serailize } from '../../interceptors/serialize.interceptor';
 
 @Controller('auth')
 @Serailize(UserDto)
