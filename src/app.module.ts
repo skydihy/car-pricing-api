@@ -24,7 +24,7 @@ const cookieSession = require('cookie-session');
       schema: process.env.DB_SCHEMA,
       entities: [User, Report],
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       logging: false,
     }),
     ConfigModule.forRoot(),
