@@ -1,4 +1,4 @@
-import { Report } from 'src/reports/reports.entity';
+import { Report } from 'src/models/reports/entities/reports.entity';
 import {
   Entity,
   Column,

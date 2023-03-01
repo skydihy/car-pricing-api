@@ -1,36 +1,37 @@
+import './environments';
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { ReportsModule } from './reports/reports.module';
+import { UsersModule } from './models/users/users.module';
+import { ReportsModule } from './models/reports/reports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User } from './users/users.entity';
-import { Report } from './reports/reports.entity';
+import { User } from './models/users/entities/users.entity';
+import { Report } from './models/reports/entities/reports.entity';
 import { APP_PIPE } from '@nestjs/core';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
 const cookieSession = require('cookie-session');
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+      schema: process.env.DB_SCHEMA,
+      entities: [User, Report],
+      autoLoadEntities: true,
+      synchronize: false,
+      logging: false,
     }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => {
-        return {
-          type: 'sqlite',
-          database: config.get<string>('DB_NAME'),
-          entities: [User, Report],
-          synchronize: true,
-        };
-      },
-    }),
+    ConfigModule.forRoot(),
     UsersModule,
     ReportsModule,
   ],
+
   controllers: [AppController],
   providers: [
     AppService,
